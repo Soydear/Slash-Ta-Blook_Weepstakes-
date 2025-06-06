@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title id="page-title">Slash-ta Blook</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #000;
+      color: #fff200;
+      font-family: 'Press Start 2P', monospace;
+      text-align: center;
+      overflow-x: hidden;
+      position: relative;
+      min-height: 100vh;
+    }
+
+    .header-img {
+      width: 300px;
+      margin-top: 80px;
+      vertical-align: middle;
+    }
+
+    .soon-box {
+      border: 3px dashed #fff200;
+      padding: 20px;
+      margin: 100px auto 60px;
+      width: 80%;
+      max-width: 600px;
+      background-color: rgba(255, 255, 0, 0.1);
+      animation: flicker 2s infinite;
+    }
+
+    .soon-box h2 {
+      margin: 0 0 10px;
+      color: #fff200;
+    }
+
+    .soon-box ul {
+      list-style: none;
+      padding: 0;
+      color: #ffffff;
+    }
+
+    .soon-box li::before {
+      content: "• ";
+      color: #fff200;
+    }
+
+    @keyframes flicker {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.8; }
+      70% { opacity: 0.5; }
+    }
+
+    .money {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      animation: fall 5s linear infinite;
+      z-index: 0;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(-100px) rotate(0deg); }
+      100% { transform: translateY(100vh) rotate(360deg); }
+    }
+
+    .scanlines {
+      pointer-events: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: repeating-linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.1) 0px,
+        rgba(0, 0, 0, 0.1) 1px,
+        transparent 1px,
+        transparent 3px
+      );
+      z-index: 1000;
+    }
+
+    .info-section {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 120px;
+      flex-wrap: wrap;
+      z-index: 10;
+      position: relative;
+    }
+
+    .fake-icon {
+      width: 60px;
+      image-rendering: pixelated;
+    }
+
+    .fake-button {
+      background: #fff200;
+      color: black;
+      font-family: 'Press Start 2P', monospace;
+      padding: 15px;
+      border: 4px solid black;
+      text-decoration: none;
+      box-shadow: 0 0 10px #fff200, 0 0 20px #fff200;
+      animation: glitch 1s infinite;
+      position: relative;
+      z-index: 1;
+      cursor: pointer;
+    }
+
+    .fake-button:hover {
+      background: black;
+      color: #fff200;
+      box-shadow: 0 0 10px red, 0 0 20px red;
+    }
+
+    @keyframes glitch {
+      0% { transform: translate(0); }
+      20% { transform: translate(-2px, 2px); }
+      40% { transform: translate(2px, -1px); }
+      60% { transform: translate(-1px, -2px); }
+      80% { transform: translate(1px, 2px); }
+      100% { transform: translate(0); }
+    }
+
+    .ghost {
+      position: absolute;
+      bottom: 70px;
+      width: 40px;
+      image-rendering: pixelated;
+      animation: float-left-right 4s ease-in-out infinite;
+      z-index: 2;
+    }
+
+    @keyframes float-left-right {
+      0%   { left: -20px; transform: translateY(0); }
+      50%  { left: 120px; transform: translateY(-5px); }
+      100% { left: -20px; transform: translateY(0); }
+    }
+
+    .side-banner {
+      position: fixed;
+      top: 150px;
+      right: 10px;
+      border: 4px solid #fff200;
+      padding: 5px;
+      background-color: #000;
+      z-index: 9999;
+      width: 140px;
+      text-align: center;
+    }
+
+    .side-banner img {
+      width: 120px;
+      height: auto;
+      cursor: pointer;
+    }
+
+    .announcement {
+      color: #fff;
+      margin-top: 150px;
+      margin-bottom: 100px;
+      padding: 20px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      background: rgba(255,255,0,0.1);
+      border: 2px solid #fff200;
+      font-size: 12px;
+      line-height: 1.5;
+      position: relative;
+      font-weight: 700;
+      z-index: 10;
+    }
+
+    .announcement span.small-ta {
+      font-size: 0.6em;
+      font-style: italic;
+      vertical-align: super;
+    }
+
+    .glitch-text {
+      position: relative;
+      display: inline-block;
+      color: red;
+      font-weight: 900;
+      text-decoration: line-through;
+      user-select: none;
+    }
+
+    .glitch-text::before, .glitch-text::after {
+      content: attr(data-text);
+      position: absolute;
+      left: 0; top: 0;
+      width: 100%;
+      overflow: hidden;
+      color: red;
+      animation: glitch-flicker 1s infinite;
+      clip-path: polygon(0 2%, 100% 2%, 100% 15%, 0 15%);
+      user-select: none;
+    }
+    .glitch-text::after {
+      animation-delay: 0.5s;
+      color: blue;
+      clip-path: polygon(0 60%, 100% 60%, 100% 75%, 0 75%);
+    }
+
+    @keyframes glitch-flicker {
+      0%, 100% { clip-path: polygon(0 2%, 100% 2%, 100% 15%, 0 15%); }
+      50% { clip-path: polygon(0 15%, 100% 15%, 100% 25%, 0 25%); }
+    }
+
+    /* Easter egg statue */
+    #logo-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 20px;
+      gap: 10px;
+      position: relative;
+      z-index: 10;
+    }
+
+    #statue-next-to-logo {
+      width: 100px;
+      animation: slow-rotate 10s linear infinite;
+      vertical-align: middle;
+    }
+
+    @keyframes slow-rotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .falling-easter {
+      position: absolute;
+      width: 80px;
+      animation: fall 8s linear forwards, slow-rotate 10s linear infinite;
+      z-index: 10000;
+      left: 50%;
+      margin-left: -40px;
+      top: -100px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="scanlines"></div>
+
+  <audio id="clickSound">
+    <source src="https://voca.ro/1jfUNlXAXCVN.mp3" type="audio/mpeg" />
+  </audio>
+
+  <div class="side-banner">
+    <img src="https://i.postimg.cc/656WLQnx/pixil-frame-0-16.png" onclick="triggerEasterEgg()" title="SI O NO SOY INCREIBLEEEE??????" />
+  </div>
+
+  <div id="logo-container">
+    <img src="header.png" class="header-img" alt="Slash ta Blook Header" />
+    <!-- Estatua se agregará aquí tras Easter Egg -->
+  </div>
+
+  <!-- Money falling images with different delays and positions -->
+  <img src="money.png" class="money" style="left: 10%;" />
+  <img src="money.png" class="money" style="left: 30%; animation-delay: 1s;" />
+  <img src="money.png" class="money" style="left: 50%; animation-delay: 2s;" />
+  <img src="money.png" class="money" style="left: 70%; animation-delay: 1.5s;" />
+  <img src="money.png" class="money" style="left: 90%; animation-delay: 0.5s;" />
+
+  <div class="soon-box">
+    <h2>¡MUY PRONTO!</h2>
+    <ul>
+      <li>Ofertas limitadas</li>
+      <li>Objetos misteriosos</li>
+      <li>Eventos secretos</li>
+      <li>Y más...</li>
+    </ul>
+  </div>
+
+  <div class="announcement" id="announcement-text">
+    ¡Saludos desde el <strong>Underground</strong>! Soy <strong><span style="color:#fff200;">Slash <span class="small-ta">ta</span> Blook™</span></strong>, el único, el inigualable y totalmente original presentador de la <span class="glitch-text" id="glitchSpamtom" data-text="Spamtom">Spamtom</span> <strong> WEEPTAKES™</strong>.<br /><br />
+
+    Transmitiendo directamente desde mi suite en el glorioso, húmedo y ligeramente electrificado <strong>Underground</strong>, te invito a participar en este concurso absolutamente original (sin plagios ni conexiones sospechosas), lleno de premios (¿reales?), sorteos (misteriosos) y tal vez algunas explosiones.<br /><br />
+
+    ¿Qué puedes ganar? ¿¡Qué no puedes ganar!? Cosas brillantes, misteriosas, posiblemente malditas y, lo más importante... ¡exclusivas!<br /><br />
+
+    ¿Quieres perder? ¡Claro que no! Pero si pierdes, recuerda que la culpa es del font pixelado.<br /><br />
+
+    ¡No pierdas esta oportunidad de oro (literalmente)! Inscríbete hoy. Entrega tus datos. O tu alma. O un chicle usado. ¡Yo no juzgo!<br /><br />
+
+    ¡Ahora mismo, en tu pantalla favorita! ¿Qué podría salir mal?<br /><br />
+
+    <em style="font-size: 9px; color: gray;">*slash-tablook inc. no se hace responsable por pérdidas espirituales, existenciales o monetarias*</em>
+  </div>
+
+  <div class="info-section">
+    <img src="https://i.postimg.cc/50G6S2Zm/pixil-frame-0-18.png" alt="icono estafa" class="fake-icon" />
+
+    <div style="position: relative;">
+      <a href="https://discord.gg/2R54JpDsJm" target="_blank" class="fake-button">AQUÍ PARA MÁS INFORMACIÓN</a>
+      <img src="https://i.postimg.cc/T167crgf/pixil-gif-drawing-3.gif" alt="fantasma" class="ghost" />
+    </div>
+  </div>
+
+  <script>
+    // Glitch text transformation
+    window.addEventListener('DOMContentLoaded', () => {
+      const glitchEl = document.getElementById('glitchSpamtom');
+      setTimeout(() => {
+        glitchEl.style.transition = 'opacity 0.7s ease-out';
+        glitchEl.style.opacity = '0';
+        setTimeout(() => {
+          glitchEl.textContent = 'Slash ';
+          glitchEl.classList.remove('glitch-text');
+          glitchEl.classList.add('small-ta');
+          glitchEl.style.opacity = '1';
+          glitchEl.style.color = '#fff200';
+          glitchEl.style.textDecoration = 'none';
+
+          const ta = document.createElement('span');
+          ta.className = 'small-ta';
+          ta.textContent = 'ta';
+          glitchEl.appendChild(ta);
+
+          const blookText = document.createTextNode(' Blook™');
+          glitchEl.appendChild(blookText);
+        }, 700);
+      }, 3000);
+    });
+
+    // Easter Egg logic
+    function triggerEasterEgg() {
+      const clickSound = document.getElementById('clickSound');
+      clickSound.play();
+
+      // Create falling statue animation
+      if (!document.querySelector('.falling-easter')) {
+        const easterImg = document.createElement('img');
+        easterImg.src = 'https://i.postimg.cc/Znw6G4kC/imagen-2025-06-06-174510065.png';
+        easterImg.className = 'falling-easter';
+        document.body.appendChild(easterImg);
+
+        setTimeout(() => {
+          easterImg.remove();
+          addStatueNextToLogo();
+          alert("¡Easter Egg encontrado!");
+        }, 8000);
+      }
+    }
+
+    function addStatueNextToLogo() {
+      const logoContainer = document.getElementById('logo-container');
+      if (!document.getElementById('statue-next-to-logo')) {
+        const statue = document.createElement('img');
+        statue.id = 'statue-next-to-logo';
+        statue.src = 'https://i.postimg.cc/Znw6G4kC/imagen-2025-06-06-174510065.png';
+        logoContainer.appendChild(statue);
+
+        // Cambiar título y texto de página
+        document.title = 'ERES UN SUERTUDO!';
+        document.getElementById('page-title').innerText = 'ERES UN SUERTUDO!';
+      }
+    }
+  </script>
+</body>
+</html>
